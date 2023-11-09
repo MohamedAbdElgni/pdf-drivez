@@ -1,0 +1,134 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="col-md-8 books mt-5 mb-2">
+    <h2 class="cat-title-int">
+        {%if parent_cat.category_id == 113 %}
+        Our Editor's Choice
+        {% elif parent_cat.category_id == 112%} 
+        The Most Popular Books
+        {% else %}
+        Trending eBooks about {{parent_cat.category_name}}
+        {% endif %}
+        
+    </h2>
+    <div class="subcats-box">
+        <ul class="subcats-ul">
+            {% for cat in rltd_categories %}
+
+            <!-- s -->
+            <li  class="subcats-li">
+              <a href="{{ url_for('category', category_id=cat.category_id, page=1) }}">
+                    <img src="{{cat.category_image_link}}" alt="{{cat.category_name}}" class="subcats-img" />
+                    <p class="subcats-p">{{cat.category_name}}</p>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+  
+    <div class="content-books">
+      
+  
+      <!----------start book group1------------>
+      <div class="row books-group1">
+        
+      </div>
+  
+      <!------------pagenation----------->
+      <!-------start pagination------->
+      <div class="load-more text-center mt-4" id="loadmore">
+        <button class="btn" onclick="load()" aria-label="loading more">
+          <span>Load More</span>
+        </button>
+      </div>
+      <div class="loader text-center mt-4" id="loader">
+        <div class="lds-spinner">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+  </div>
+
+
+
+  <script>
+    var page = 1; // Track the current page number
+    var itemsPerPage = 4; // Number of items to show per page
+    var catBooks = {{ cat_books_json | tojson | safe }}; // Get the JSON-serializable list from Flask
+    
+    function load() {
+      var contentDiv = document.querySelector('.books-group1');
+      var start = (page - 1) * itemsPerPage;
+      var end = start + itemsPerPage;
+      
+      // Show the next batch of items
+      for (var i = start; i < end && i < catBooks.length; i++) {
+        var book = catBooks[i];
+        var card = createCardElement(book);
+        contentDiv.appendChild(card);
+      }
+  
+      // Increment the page number
+      page++;
+  
+      // Hide the "Load More" button if all items are displayed
+      if (end >= catBooks.length) {
+        document.getElementById('loadmore').style.display = 'none';
+      }
+    }
+    load();
+    
+  
+    
+    function createCardElement(book) {
+      var cardDiv = document.createElement('div');
+      cardDiv.className = 'col-12';
+  
+      // Create the card HTML structure and populate it with book data
+      cardDiv.innerHTML = `
+        <div class="card mt-2">
+          <div class="row">
+            <div class="col-lg-4 card-img-left">
+              <a href="">
+                <img loading="lazy" src="${book.book_img_link}" alt="${book.book_title} cover" class="img-fluid" />
+              </a>
+            </div>
+            <div class="col-lg-8 card-body">
+              <div class="card-title">
+                <h3>
+                  <a href="${book.book_link}">${book.book_title}</a>
+                </h3>
+                <div class="card-text">
+                  <p>
+                    <span>${book.book_pages}</span>·<span>${book.year}</span>·<span>${book.book_size}</span>
+                  </p>
+                  <p>${book.book_description}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      return cardDiv;
+    }
+    
+  
+    // ... (rest of your JavaScript code)
+  </script>
+    
+
+      <!-------end pagination------->
+
+    <!------------end book group1----------->
+{% endblock %}

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+  
+    <meta name="keywords" content="pdf download, pdf free download, free ebook download, free files, read pdf online free, read ebook online free, download ebook pdf, ebook,download ebooks for free,download books for free,download ebooks,download pdf,pdf download,free ebook download,how to download books for free,free pdf ebook download,websites to download free ebooks,free ebooks download pdf,free books download pdf,free books pdf download,how to download paid books,how to create an ebook,websites to download books pdf,download ebook,pdf book download,ebook download" />
+    <meta name="description" content="Search and download eBooks PDF files for free using FreeFiles.cc and enjoy quick and straightforward downloads without any hidden fees or subscriptions." />
+    <meta name="author" content="FreeFiles" />
+    {%if title%}
+    <title>Free Files {{title}} - Search and download eBooks PDF files for free</title>
+    {%else%}
+    <title>Free Files Download</title>
+    {%endif%}
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/bootstrap.min.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/all.min.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style.css')}}" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{{url_for('static', filename='/images/apple-touch-icon.png')}}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{url_for('static', filename='/images/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static', filename='/images/favicon-16x16.png')}}">
+    <link rel="manifest" href="{{url_for('static', filename='/images/site.webmanifest')}}">
+  
+  </head>
+  <body>
+    <!-------start navbar------->
+    <header>
+      <nav class="navbar navbar-expand-lg p-3">
+        <div class="container">
+          <h1>
+            <a class="navbar-brand" href="{{url_for('home')}}"> <span>FREE</span>FILES</a>
+          </h1>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="fas fa-bars"></span>
+          </button>
+<!-- search con -->
+          <ul class="navbar-nav mb-2 mb-lg-0 col-md-7 col-12">
+            <li class="w-100">
+              <form action="{{ url_for('search') }}" class="d-flex w-100">
+                <input
+                  class="form-control num-page" autocomplete="off"
+                  type="search"
+                  placeholder="Search for ebooks, tutorials, manuals and authors in 84,952,643 files"
+                  aria-label="Search"
+                  required
+                  name="q" value="{{ request.args.get('q', '') }}"
+                />
+                <button
+                  class="btn btn-search"
+                  type="submit"
+                  id="search"
+                  aria-label="search"
+                >
+                  <i class="fa fa-search"></i>
+                </button>
+              </form>
+            </li>
+          </ul>
+<!-- enf search con -->
+          <div
+            class="collapse navbar-collapse container"
+            id="navbarSupportedContent"
+          >
+            <ul
+              class="navbar-nav mb-2 mb-lg-0 w-100 d-flex align-items-baseline justify-content-end"
+              style="gap: 10px"
+            >
+              <li class="nav-item">
+                <a href="{{ url_for('suggest_random_ebook') }}" class="btn btn-suggest"> Suggest an eBook </a>
+              </li>
+
+              <li class="nav-item dropdown">
+                <a
+                  class="btn lang"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  aria-label="language"
+                >
+                  <i class="fas fa-globe"></i>
+                </a>
+                <ul
+                  class="dropdown-menu dropdown-menu-right mt-2"
+                  aria-labelledby="navbarDropdown"
+                >
+                  <li>
+                    <a class="dropdown-item" href="https://translate.google.com/translate?sl=auto&tl=en&hl=en&u=https://freefiles.cc&client=webapp" onclick="changeLanguage('en')" target="_blank">English</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="https://translate.google.com/translate?sl=auto&tl=es&hl=en&u=https://freefiles.cc&client=webapp" rel="nofollow" target="_blank">Español</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="https://translate.google.com/translate?sl=auto&tl=fr&hl=en&u=https://freefiles.cc&client=webapp" rel="nofollow" target="_blank">French</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="https://translate.google.com/translate?sl=auto&tl=it&hl=en&u=https://freefiles.cc&client=webapp" rel="nofollow" target="_blank">Italian</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="https://translate.google.com/translate?sl=auto&tl=ar&hl=en&u=https://freefiles.cc&client=webapp" rel="nofollow" target="_blank">Arabic</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="https://translate.google.com/translate?sl=auto&tl=nl&hl=en&u=https://freefiles.cc&client=webapp" rel="nofollow" target="_blank">Dutch</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="https://translate.google.com/translate?sl=auto&tl=ru&hl=en&u=https://freefiles.cc&client=webapp" rel="nofollow" target="_blank">Russian</a>
+                  </li>
+
+
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+
+    <!-------end navbar----------->
+
+    <!--------start content--------->
+
+    <section class="content mb-4">
+      <div class="container-fluid">
+        <div class="row m-auto px-lg-4">
+        
+          <!--- start aside---->
+          <aside class="col-md-4 mt-5 mb-2">
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                  <button
+                    class="accordion-button"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseOne"
+                    aria-label="categories"
+                  >
+                    Categories
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseOne"
+                  class="accordion-collapse collapse show"
+                  aria-labelledby="flush-headingOne"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div class="accordion-body">
+                    <ul>
+                      {%for cat in categories%}
+                      <li>
+                        <a href="{{ url_for('category', category_id=cat.category_id) }}">
+
+                          <img
+                            loading="lazy"
+                            src="{{cat.category_image_link}}"
+                            alt="{{cat.category_name}}sss"
+                            class="icon"
+                            title="{{cat.category_name}}"
+                          />
+                          <span>{{cat.category_name}}</span>
+                        </a>
+                      </li>
+                      {% endfor%}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseTwo"
+                    aria-label="suggested books"
+                  >
+                    Suggested Ebooks
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseTwo"
+                  class="accordion-collapse collapse"
+                  aria-labelledby="flush-headingTwo"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div class="accordion-body">
+                    <!-- start of left sugg bokks -->
+                    <div class="row suggest-book">
+                      {%for book in sug_books%}
+                      <div class="col-12 mb-2">
+                        <div class="card">
+                          <div class="card-content d-flex">
+                            <div class="img">
+                              <a href="{{ url_for('book', book=book.book_title|replace(' ', '-'))+'-'+book.book_id }}">
+                                <img
+                                  src="{{book.book_img_link}}"
+                                  alt="{{book.book_name}} cover"
+                                  loading="lazy"
+                                />
+                              </a>
+                            </div>
+
+                            <div class="card-body">
+                              <div class="card-title">
+                                <h3>
+                                  <a href="{{ url_for('book', book=book.book_title|replace(' ', '-'))+'-'+book.book_id }}"
+                                    >{{book.book_title}}</a
+                                  >
+                                </h3>
+                                <div class="card-text">
+                                  <p>
+                                    <span>{{book.book_pages}}</span
+                                    >·<span>{{book.year}}</span>·<span>{{book.book_size}}</span>
+                                  </p>
+                                  <p>
+                                    {{book.book_description}}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {% endfor %}
+                      <!-- end of left sug books -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+          <!----end aside------->
+          
+{%block content%}
+
+{%endblock%}
+</section>
+    <!----------start footer--------------->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-12">
+            <h1>
+              <a class="navbar-brand" href="{{url_for('home')}}">
+                <span class="text-white">FREE</span> FILES</a
+              >
+            </h1>
+          </div>
+          <div class="col-md-8 col-12">
+            <div class="row">
+              <div class="col-md-4">
+                <h2>Company</h6>
+                <ul>
+                  <li><a href="{{url_for('about')}}">About Us</a></li>
+                  <li><a href="{{url_for('mobile_app')}}">Mobile App</a></li>
+                  <li><a href="{{url_for('dmca')}}">DMCA & Copyright</a></li>
+                </ul>
+              </div>
+              <div class="col-md-4">
+                <h2>Help</h2>
+                <ul>
+                  <li><a href="{{url_for('contact')}}">Contact us</a></li>
+                  <li><a href="{{url_for('feedback')}}">Feedback</a></li>
+                  <li><a href="{{url_for('privacy')}}">Privacy Policy</a></li>
+                </ul>
+              </div>
+
+              <div class="col-md-4">
+                <h2>Social</h2>
+                <ul class="d-flex social">
+                  <li>
+                    <a href="https://twitter.com/freefiles_cc" aria-label="twitter">
+                      <i class="fa-brands fa-twitter"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://facebook.com/freefiles.cc" aria-label="facebook">
+                      <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!----------end footer--------------->
+
+    <!------------ start top button--------->
+    <button class="top-btn" aria-label="top page">
+      <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <!------------ end top button--------->
+
+    
+    <script type="text/javascript" src="{{url_for('static', filename='/js/all.min.js')}}" async></script>
+    <script type="text/javascript" src="{{url_for('static', filename='/js/main.js')}}" async></script>
+    <script type="text/javascript" src="{{url_for('static', filename='/js/bootstrap.min.js')}}" async></script>
+  </body>
+</html>
+
+

@@ -1,0 +1,248 @@
+{% extends 'layout.html' %}
+
+{%block content%}
+          <div class="col-md-8 mt-5 book mb-2">
+            <div class="mb-5 book-details">
+              <div class="card">
+                <div class="row">
+                  <div class="col-lg-4 text-center">
+                    <a href="#">
+                      <img
+                        loading="lazy"
+                        src="{{book.book_img_link}}"
+                        alt="book"
+                        class=""
+                        width="200" 
+                        height="280"
+                      />
+                    </a>
+                  </div>
+
+                  <div class="col-lg-8 card-body">
+                    <div class="card-title">
+                      <h2>
+                        <a href="#"
+                          >{{book.book_title}}
+                        </a>
+                      </h2>
+                      <div class="card-text">
+                        <p>
+                          <span>{{book.book_pages}}</span>·<span>{{book.year}}</span>·<span
+                            >2.74 MB</span
+                          >
+                        </p>
+                        <p class="d-desc">
+                          {{book.book_description}}
+                        </p>
+
+                        <p class="d-author">
+                          <span>by</span>
+                          <a href="#" aria-label="author"
+                            >{{book.book_author}}</a
+                          >
+                        </p>
+                        
+                        
+                        <div class="cat">
+                          {%for cat in book_category%}
+                          <a href="{{ url_for('category', category_id=cat.category_id) }}" aria-label="category">
+                            <i class="fa fa-plus"></i>
+                            {{cat.category_name}}</a
+                          >
+                          {%endfor%}
+                        </div>
+                        
+                        
+                        
+                        
+                        <div class="action">
+                          
+                          <button
+                            type="button"
+                            class="btn mt-2"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                            id="view"
+                            aria-label="view"
+                            
+                          >
+                          
+                            <i class="fas fa-eye"></i>
+                          </button>
+
+                          <button
+                          
+                            type="button"
+                            class="btn mt-2"
+                            id="download"
+                            aria-label="download"
+ onclick="window.open('https://download.uphost.click/ebook?{{book.book_title}}', '_blank'); return false;"
+                          >
+                          
+                          
+                            <i class="fas fa-down-long"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!---start similer books-->
+            <div class="content-books">
+              <div class="row mb-3">
+                <div class="col-md-8 col-12">
+                  <h2>Similar Free eBooks</h2>
+                </div>
+                <div class="col-md-4 col-12">
+            
+                </div>
+              </div>
+
+              <div class="row row-cols-1 g-4">
+                
+              </div>
+            </div>
+
+            <!----end similer books------->
+            
+            <!-------end books------------->
+            
+            <!-------start pagination------->
+            <div class="load-more text-center mt-4" id="loadmore">
+              <button class="btn" onclick="load()" aria-label="loading more">
+                <span>Load More</span>
+              </button>
+            </div>
+            <div class="loader text-center mt-4" id="loader">
+              <div class="lds-spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+        </div>
+          <!-- Modal -->
+
+          
+    <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="m-auto text-center">
+            <div class="lds-spinner">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            aria-label="close"
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            aria-label="save changes"
+          >
+            Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var page = 1; // Track the current page number
+    var itemsPerPage = 6; // Number of items to show per page
+    var catBooks = {{ similar_books | tojson | safe }}; // Get the JSON-serializable list from Flask
+  
+    function load() {
+      var contentDiv = document.querySelector('.row.row-cols-1.g-4');
+      var start = (page - 1) * itemsPerPage;
+      var end = start + itemsPerPage;
+  
+      // Check if there are more books to load
+      if (start < catBooks.length) {
+        for (var i = start; i < end && i < catBooks.length; i++) {
+          var book = catBooks[i];
+          var card = createCardElement(book);
+          contentDiv.appendChild(card);
+        }
+        // Increment the page number
+        page++;
+      }
+  
+      // Hide the "Load More" button if there are no more books to load
+      if (start + itemsPerPage >= catBooks.length) {
+        document.getElementById('loadmore').style.display = 'none';
+      }
+    }
+    load();
+  
+    function createCardElement(book) {
+      var cardDiv = document.createElement('div');
+      cardDiv.className = 'col-lg-4';
+  
+      // Create the card HTML structure and populate it with book data
+      cardDiv.innerHTML = `
+        <div class="card h-100">
+          <div class="card-img-top">
+            <a href="${book.book_link}">
+              <img loading="lazy" src="${book.book_img_link}" alt="${book.book_title} cover" class="card-img" />
+            </a>
+          </div>
+          <div class="card-body">
+            <div class="card-title">
+              <h3>
+                <a href="${book.book_link}">${book.book_title}</a>
+              </h3>
+              <div class="card-text">
+                <p>
+                  <span>${book.book_pages}</span>·<span>${book.year}</span>·<span>${book.book_size}</span>
+                </p>
+                <p>${book.book_description}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      return cardDiv;
+    }
+  </script>
+{%endblock content%}
+
+
+

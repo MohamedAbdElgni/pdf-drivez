@@ -1,0 +1,126 @@
+{% extends 'layout.html' %}
+
+{%block content%}
+<div class="col-md-8 books mt-5 mb-2">
+  <div class="row filter-books">
+    <div class="col-lg-4 col-12 text-lg-start text-center mb-3">
+      <span class="d-result"
+        >{{search_results_count}} results found in {{total_time}} second.</span
+      >
+    </div>
+<!-- Match form -->
+    
+<!-- Match form end -->
+  </div>
+
+  {%if sbooks%}
+  <div class="">
+    
+    <form action="" method="POST" class="row filter-options">
+    {{ form.hidden_tag() }}
+      <div class="same-line">
+        {{ form.year_select(class="form-select select w-20",) }}
+        {{ form.pages_select(class="form-select") }}
+        {{form.exact_match(class="select w-25")}}
+        {{form.exact_match.label(class="")}}
+        {{form.submit(class="btn btn-suggest")}}
+      </div>
+    </form>
+  </div>
+
+  <div class="row books-group1">
+    
+  </div>
+  {% else %}
+    <h2 class="text-center mt-5"><span style="color:#f75454">No results</span> found for "{{query}}"</h2>
+    <a href="{{ url_for('suggest_random_ebook') }}" class="no-books btn btn-suggest"> Suggest an eBook </a>
+  
+  {% endif %}
+  <!------------pagenation----------->
+  <!-------start pagination------->
+  <div class="load-more text-center mt-4" id="loadmore">
+    <button class="btn" onclick="load()" aria-label="loading more">
+      <span>Load More</span>
+    </button>
+  </div>
+  <div class="loader text-center mt-4" id="loader">
+    <div class="lds-spinner">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+var page = 1; // Track the current page number
+var itemsPerPage = 5; // Number of items to show per page
+var catBooks = {{ sbooks | tojson | safe }}; // Get the JSON-serializable list from Flask
+function load() {
+  var contentDiv = document.querySelector('.books-group1');
+  var start = (page - 1) * itemsPerPage;
+  var end = start + itemsPerPage;
+  
+  // Show the next batch of items
+  for (var i = start; i < end && i < catBooks.length; i++) {
+    var book = catBooks[i];
+    var card = createCardElement(book);
+    contentDiv.appendChild(card);
+  }
+
+  // Increment the page number
+  page++;
+
+  // Hide the "Load More" button if all items are displayed
+  if (end >= catBooks.length) {
+    document.getElementById('loadmore').style.display = 'none';
+  }
+}
+load();
+
+function createCardElement(book) {
+  var cardDiv = document.createElement('div');
+  cardDiv.className = 'col-12';
+
+  // Create the card HTML structure and populate it with book data
+  cardDiv.innerHTML = `
+    <div class="card mt-4">
+      <div class="row">
+        <div class="col-lg-4 card-img-left">
+          <a href="">
+            <img loading="lazy" src="${book.book_img_link}" alt="${book.book_title} cover" class="img-fluid" />
+          </a>
+        </div>
+        <div class="col-lg-8 card-body">
+          <div class="card-title">
+            <h3>
+              <a href="${book.book_link}">${book.book_title}</a>
+            </h3>
+            <div class="card-text">
+              <p>
+                <span>${book.book_pages}</span>·<span>${book.year}</span>·<span>${book.book_size}</span>
+              </p>
+              <p>${book.book_description}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  return cardDiv;
+}
+</script>
+
+
+  {%endblock content%}

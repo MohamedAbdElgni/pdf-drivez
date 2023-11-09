@@ -1,0 +1,76 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+
+<div class="col-md-8 books mt-5 mb-2">
+    <div
+    class="alert alert-danger alert-dismissible fade show"
+    role="alert">
+    <p>
+      <strong>Free Files</strong> is your search engine for PDF files.
+      As of today we have
+      <strong>84,952,6<span class="num-page">43</span></strong> eBooks
+      for you to <strong>download for free</strong>. No annoying ads,
+      <strong>no download limits</strong>, enjoy it and don't forget
+      to bookmark and share the love!
+    </p>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+    <div class="content-books">
+        {% for category in result %}
+        <h2 class="d-title mt-0">
+            <a href="{{ category['category_link'] }}">
+                <i class="{{ category['category_icon'] }}"></i>
+                {{ category['category_text'] }}
+            </a>
+        </h2>
+        <div class="row books-group">
+            {% for book in category['books'] %}
+            <div class="col-12">
+                <div class="card mb-3">
+                    <div class="row">
+                        <div class="col-lg-4 card-img-left">
+                            <a href="{{ book['book_link'] }}">
+                                <img loading="lazy" src="{{ book['book_img_link'] }}" alt="book" class="img-fluid" />
+                            </a>
+                        </div>
+                        <div class="col-lg-8 card-body">
+                            <div class="card-title">
+                                <h3>
+                                    <a href="{{ book['book_link'] }}">{{ book['book_title'] }}</a>
+                                </h3>
+                                <div class="card-text">
+                                    <p>
+                                        <span>{{ book['book_pages'] }}</span>·<span>{{ book['year'] }}</span>·<span>{{ book['book_size'] }}</span>
+                                    </p>
+                                    <p>{{ book['book_description'] }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+        
+        </div>
+    </div>
+</div>
+
+    <div class="load-more text-center mt-4" id="loadmore">
+        <button class="btn" onclick="load()" aria-label="loading more">
+          <span>Load More</span>
+        </button>
+      </div>
+
+
+
+
+
+{% endblock content %}
