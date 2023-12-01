@@ -1,5 +1,5 @@
 from pdf_d.models import Category, Book
-from flask import render_template, url_for, redirect, request, Response, jsonify, send_from_directory
+from flask import render_template, url_for, redirect, request, Response, jsonify, send_from_directory,abort
 from pdf_d import app
 from pdf_d.forms import Filters
 from pdf_d.helpers import split_string, remove_duplicates, random_books, make_json
@@ -11,15 +11,14 @@ from flask_caching import Cache
 
 
 # Error handler for 404 Not Found
+# Error handler for 404 Not Found
 @app.errorhandler(404)
 def page_not_found(error):
     sug_books = random_books(Book, 4)
     categories = Category.query.filter_by(category_type="parent").all()
-    return redirect(url_for('error_page'))
+    return render_template("error.html", categories=categories, sug_books=sug_books), 404
 
 # Route for the error page
-
-
 @app.route("/error")
 def error_page():
     sug_books = random_books(Book, 4)
