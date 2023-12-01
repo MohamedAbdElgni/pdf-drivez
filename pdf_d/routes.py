@@ -10,25 +10,21 @@ import random
 from flask_caching import Cache
 
 
-# @app.errorhandler(Exception)
-# def handle_error(error):
-#     # Log the error, if needed
-#     app.logger.error(error)
-#     print(error)
-#     # Redirect to the home page
-#     return redirect('/')
+# Error handler for 404 Not Found
+@app.errorhandler(404)
+def page_not_found(error):
+    sug_books = random_books(Book, 4)
+    categories = Category.query.filter_by(category_type="parent").all()
+    return redirect(url_for('error_page'))
 
-# # Define a specific error handler for 404 (Not Found) errors
-
-
-# @app.errorhandler(404)
-# def handle_not_found_error(error):
-#     # Log the error, if needed
-#     app.logger.error(error)
+# Route for the error page
 
 
-#     # Redirect to the home page
-#     return redirect('/')
+@app.route("/error")
+def error_page():
+    sug_books = random_books(Book, 4)
+    categories = Category.query.filter_by(category_type="parent").all()
+    return render_template("error.html", categories=categories, sug_books=sug_books)
 
 
 @app.route("/")
@@ -213,25 +209,9 @@ def about():
     title = "About"
     return render_template("about.html", title=title, categories=categories, sug_books=sug_books)
 
-# cache = Cache(app, config={'CACHE_TYPE': 'simple'})
-
-# @app.route('/sitemap.xml')
-# @cache.cached(timeout=3600)
-# def sitemap():
-#     category_links = [url_for('category', category_id=category.category_id,
-#                               _external=True) for category in Category.query.all()]
-#     book_links = [url_for('book', book=book.book_title.replace(
-#         " ", "-") + "-" + book.book_id, _external=True) for book in Book.query.all()]
-
-#     sitemap_xml = render_template(
-#         'sitemap.xml', category_links=category_links, book_links=book_links)
-#     response = Response(sitemap_xml, mimetype='text/xml')
-#     return response
-
 
 @app.route('/robots.txt')
 def robots():
-    print(app.static_folder)
     return send_from_directory(app.static_folder, 'robots.txt')
 
 
