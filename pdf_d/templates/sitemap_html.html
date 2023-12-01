@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sitemap</title>
+</head>
+<body>
+    <h1>sitemaps</h1>
+    <hr>
+    <h2>Categories</h2>
+    {% for category in categories %}
+        {% if category.category_id == 999 %}
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=1) }}"><b>{{ category.category_name }} part 1</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=2) }}"><b>{{ category.category_name }} part 2</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=3) }}"><b>{{ category.category_name }} part 3</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=4) }}"><b>{{ category.category_name }} part 4</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=6) }}"><b>{{ category.category_name }} part 5</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=6) }}"><b>{{ category.category_name }} part 6</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=7) }}"><b>{{ category.category_name }} part 7</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=8) }}"><b>{{ category.category_name }} part 8</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=9) }}"><b>{{ category.category_name }} part 9</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=10) }}"><b>{{ category.category_name }} part 10</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=11) }}"><b>{{ category.category_name }} part 11</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=12) }}"><b>{{ category.category_name }} part 12</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=13) }}"><b>{{ category.category_name }} part 13</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=14) }}"><b>{{ category.category_name }} part 14</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=15) }}"><b>{{ category.category_name }} part 15</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=16) }}"><b>{{ category.category_name }} part 16</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=17) }}"><b>{{ category.category_name }} part 17</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=18) }}"><b>{{ category.category_name }} part 18</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=19) }}"><b>{{ category.category_name }} part 19</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=20) }}"><b>{{ category.category_name }} part 20</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=21) }}"><b>{{ category.category_name }} part 21</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=22) }}"><b>{{ category.category_name }} part 22</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=23) }}"><b>{{ category.category_name }} part 23</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=24) }}"><b>{{ category.category_name }} part 24</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=25) }}"><b>{{ category.category_name }} part 25</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=26) }}"><b>{{ category.category_name }} part 26</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=27) }}"><b>{{ category.category_name }} part 27</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=28) }}"><b>{{ category.category_name }} part 28</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=29) }}"><b>{{ category.category_name }} part 29</b></a><br>
+            <a href="{{ url_for('sitemap', category_id=category.category_id, part=30) }}"><b>{{ category.category_name }} part 30</b></a><br>
+        {% else %}
+            <a href=" {{ url_for('sitemap', category_id=category.category_id ,part=1) }} " >{{ category.category_name }}</a><br>
+        {% endif %}
+        
+    {% endfor %}
+
+</body>
+</html>

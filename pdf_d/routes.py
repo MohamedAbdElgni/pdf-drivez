@@ -10,25 +10,25 @@ import random
 from flask_caching import Cache
 
 
-@app.errorhandler(Exception)
-def handle_error(error):
-    # Log the error, if needed
-    app.logger.error(error)
-    print(error)
-    # Redirect to the home page
-    return redirect('/')
+# @app.errorhandler(Exception)
+# def handle_error(error):
+#     # Log the error, if needed
+#     app.logger.error(error)
+#     print(error)
+#     # Redirect to the home page
+#     return redirect('/')
 
-# Define a specific error handler for 404 (Not Found) errors
+# # Define a specific error handler for 404 (Not Found) errors
 
 
-@app.errorhandler(404)
-def handle_not_found_error(error):
-    # Log the error, if needed
-    app.logger.error(error)
-    
+# @app.errorhandler(404)
+# def handle_not_found_error(error):
+#     # Log the error, if needed
+#     app.logger.error(error)
 
-    # Redirect to the home page
-    return redirect('/')
+
+#     # Redirect to the home page
+#     return redirect('/')
 
 
 @app.route("/")
@@ -155,12 +155,9 @@ def book(book):
         Category.category_name.in_(book_category)).all()
     book_category = remove_duplicates(
         [{"category_name": cat.category_name, "category_id": cat.category_id}for cat in book_category])
-    
-    
+
     similar_books = make_json(random_books(
         Book, 100, selected_book.category_name))
-
-
 
     return render_template("book.html", title=selected_book.book_title, similar_books=similar_books, book_category=book_category, book=selected_book, categories=categories, sug_books=sug_books,)
 
@@ -208,6 +205,7 @@ def search():
                            categories=categories, sug_books=sug_books, total_time=total_time, search_results_count=search_results_count, sbooks=books, query=query, form=form, title=query)
 # static pages
 
+
 @app.route("/about")
 def about():
     sug_books = random_books(Book, 8)
@@ -215,28 +213,26 @@ def about():
     title = "About"
     return render_template("about.html", title=title, categories=categories, sug_books=sug_books)
 
-cache = Cache(app, config={'CACHE_TYPE': 'simple'})
+# cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
-@app.route('/sitemap.xml')
-@cache.cached(timeout=3600)
-def sitemap():
-    category_links = [url_for('category', category_id=category.category_id,
-                              _external=True) for category in Category.query.all()]
-    book_links = [url_for('book', book=book.book_title.replace(
-        " ", "-") + "-" + book.book_id, _external=True) for book in Book.query.all()]
+# @app.route('/sitemap.xml')
+# @cache.cached(timeout=3600)
+# def sitemap():
+#     category_links = [url_for('category', category_id=category.category_id,
+#                               _external=True) for category in Category.query.all()]
+#     book_links = [url_for('book', book=book.book_title.replace(
+#         " ", "-") + "-" + book.book_id, _external=True) for book in Book.query.all()]
 
-    sitemap_xml = render_template(
-        'sitemap.xml', category_links=category_links, book_links=book_links)
-    response = Response(sitemap_xml, mimetype='text/xml')
-    return response
+#     sitemap_xml = render_template(
+#         'sitemap.xml', category_links=category_links, book_links=book_links)
+#     response = Response(sitemap_xml, mimetype='text/xml')
+#     return response
 
 
 @app.route('/robots.txt')
 def robots():
     print(app.static_folder)
     return send_from_directory(app.static_folder, 'robots.txt')
-
-
 
 
 @app.route("/mobile-app")
@@ -278,63 +274,53 @@ def feedback():
     title = "Feedback"
     return render_template("feedback.html", title=title, categories=categories, sug_books=sug_books)
 
-@app.route("/sitemap1.xml")
-def sitemap1():
-    sitemap1_xml = render_template('sitemap1.xml')
-    response = Response(sitemap1_xml, mimetype="text/xml")
-    return response
 
-@app.route("/sitemap2.xml")
-def sitemap2():
-    sitemap2_xml = render_template('sitemap2.xml')
-    response = Response(sitemap2_xml, mimetype="text/xml")
-    return response
+@app.route("/sitemap")
+def sitemap_html():
+    # get the unique categories from the database
+    categories = Category.query.filter_by(category_type="parent").all()
+    title = "Sitemap"
+    return render_template("sitemap_html.html", title=title, categories=categories)
 
-@app.route("/sitemap3.xml")
-def sitemap3():
-    sitemap3_xml = render_template('sitemap3.xml')
-    response = Response(sitemap3_xml, mimetype="text/xml")
-    return response
 
-@app.route("/sitemap4.xml")
-def sitemap4():
-    sitemap4_xml = render_template('sitemap4.xml')
-    response = Response(sitemap4_xml, mimetype="text/xml")
-    return response
+# site map for books for each category
+# only unique books for each category
+@app.route("/sitemap/<int:category_id>/<int:part>")
+def sitemap(category_id, part):
+    # get the uniqe books based on the category id only
+    # where the book name is unique
 
-@app.route("/sitemap5.xml")
-def sitemap5():
-    sitemap5_xml = render_template('sitemap5.xml')
-    response = Response(sitemap5_xml, mimetype="text/xml")
-    return response
+    if category_id != 999 and part == 1:
+        parent = Category.query.filter_by(category_id=category_id).first()
+        books = Book.query.filter(or_(
+            Book.scrap_cat.like(f'%{parent.category_name},%'),
+            Book.scrap_cat.like(f'%,{parent.category_name},%'),
+            Book.scrap_cat.like(f'%,{parent.category_name}%'),
+            Book.scrap_cat.like(f'{parent.category_name}%'),
+        )).all()
+        book_links = [url_for('book', book=book.book_title.replace(
+            " ", "-") + "-" + book.book_id, _external=True) for book in books]
+        sitemap_content = render_template(
+            "sitemap.xml", book_links=book_links)
+    else:
+        # Get the first 1/6 books for category_id 999
+        all_books = Book.query.filter_by(category=category_id).all()
+        total_books = len(all_books)
+        start_index = (part - 1) * (total_books // 30)
+        end_index = part * (total_books // 30)
+        part_books = all_books[start_index:end_index]
 
-@app.route("/sitemap6.xml")
-def sitemap6():
-    sitemap6_xml = render_template('sitemap6.xml')
-    response = Response(sitemap6_xml, mimetype="text/xml")
-    return response
+        # Generate book links
+        book_links = [url_for('book', book=book.book_title.replace(
+            " ", "-") + "-" + str(book.book_id), _external=True) for book in part_books]
 
-@app.route("/sitemap7.xml")
-def sitemap7():
-    sitemap7_xml = render_template('sitemap7.xml')
-    response = Response(sitemap7_xml, mimetype="text/xml")
-    return response
+        # Render the sitemap template with book links
+        sitemap_content = render_template("sitemap.xml", book_links=book_links)
 
-@app.route("/sitemap8.xml")
-def sitemap8():
-    sitemap8_xml = render_template('sitemap8.xml')
-    response = Response(sitemap8_xml, mimetype="text/xml")
-    return response
+    return Response(sitemap_content, content_type='text/xml')
 
-@app.route("/sitemap9.xml")
-def sitemap9():
-    sitemap9_xml = render_template('sitemap9.xml')
-    response = Response(sitemap9_xml, mimetype="text/xml")
-    return response
 
-@app.route("/sitemap10.xml")
-def sitemap10():
-    sitemap10_xml = render_template('sitemap10.xml')
-    response = Response(sitemap10_xml, mimetype="text/xml")
-    return response
-
+@app.route("/robots.txt")
+def robots_txt():
+    robots_content = render_template("robots.txt")
+    return robots_content, 200, {'Content-Type': 'text/plain'}
