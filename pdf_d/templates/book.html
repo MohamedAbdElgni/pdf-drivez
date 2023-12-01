@@ -1,5 +1,53 @@
 {% extends 'layout.html' %}
+{%block meta%}
 
+   <meta charset="utf-8" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+  <title>{{title}} Free PDF</title>
+
+  <meta property="site_name" content="FreeFiles">
+  <meta name="description" content="Download {{title}} PDF for Free - FreeFiles" />
+  <meta name="keywords" content="{{title}}, free pdf, download pdf, download ebook, free ebook pdf,freefiles pdf, freefiles, freefiles ebook, {{title}} summary, {{title}} free pdf, {{title}} download," />
+  <meta name="author" content="Freefiles" />
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="{{title}} Free PDF" />
+  <meta property="og:description" content="Download {{title}} PDF for Free - FreeFiles" />
+  <meta property="og:site_name" content="FreeFiles" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://freefiles.cc{{ url_for('book', book=book.book_title|replace(' ', '-'))+'-'+book.book_id }}" />
+  <meta property="og:image" content="{{book.book_img_link}}" />
+
+  <!-- Canonical start -->
+  <link rel="canonical" href="https://freefiles.cc{{ url_for('book', book=book.book_title|replace(' ', '-'))+'-'+book.book_id }}">
+  <!-- Canonical end -->
+
+  <!-- Twitter card start-->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{title}} Free PDF">
+  <meta name="twitter:description" content="Download {{title}} PDF for Free - FreeFiles">
+  <meta name="twitter:image" content="https://freefiles.cc/static/images/xog.jpg">
+  <meta name="twitter:image:alt" content="{{title}} Free PDF">
+  <meta name="twitter:site" content="@freefilescc">
+  <meta name="twitter:url" content="https://freefiles.cc{{ url_for('book', book=book.book_title|replace(' ', '-'))+'-'+book.book_id }}">
+  <!-- Twitter card end-->
+
+  <!-- Schema Markup Start -->    
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Download {{title}} Free PDF",
+  "url": "https://freefiles.cc{{ url_for('book', book=book.book_title|replace(' ', '-'))+'-'+book.book_id }}",
+  "logo": "{{book.book_img_link}}"
+}
+</script>
+  <!-- Schema Markup End --> 
+
+{%endblock meta%}
 {%block content%}
           <div class="col-md-8 mt-5 book mb-2">
             <div class="mb-5 book-details">
@@ -20,11 +68,9 @@
 
                   <div class="col-lg-8 card-body">
                     <div class="card-title">
-                      <h2>
-                        <a href="#"
-                          >{{book.book_title}}
-                        </a>
-                      </h2>
+                      <h1>
+                        {{book.book_title}}
+                      </h1>
                       <div class="card-text">
                         <p>
                           <span>{{book.book_pages}}</span>·<span>{{book.year}}</span>·<span
@@ -70,18 +116,11 @@
                             <i class="fas fa-eye"></i>
                           </button>
 
-                          <button
-                          
-                            type="button"
-                            class="btn mt-2"
-                            id="download"
-                            aria-label="download"
- onclick="window.open('https://download.uphost.click/ebook?{{book.book_title}}', '_blank'); return false;"
-                          >
-                          
-                          
-                            <i class="fas fa-down-long"></i>
-                          </button>
+  <a href="https://download.uphost.click/ebook?{{book.book_title}}" target="_blank" aria-label="download">
+  <button type="button" class="btn mt-2" id="download">
+  <i class="fas fa-download"></i></button>
+</a>
+
                         </div>
                       </div>
                     </div>

@@ -1,6 +1,53 @@
 {% extends 'layout.html' %}
-{% block content %}
+  {%block meta%}
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="keywords" content="pdf download, pdf free download, free ebook download, free files, read pdf online free, read ebook online free, download ebook pdf, ebook,download ebooks for free,download books for free,download ebooks,download pdf,pdf download,free ebook download,how to download books for free,free pdf ebook download,websites to download free ebooks,free ebooks download pdf,free books download pdf,free books pdf download,how to download paid books,how to create an ebook,websites to download books pdf,download ebook,pdf book download,ebook download" />
+    <meta name="description" content="Free eBooks in PDF format ready to download using FreeFiles.cc, Enjoy over 90+ million free ebooks without signup or subscription." />
+    <meta name="author" content="FreeFiles" />
+    {%if title%}
+    <title>FreeFiles.cc - Search and Download eBooks in PDF Format for Free</title>
+   {%endif%}
+  <meta property="site_name" content="FreeFiles">
+  <meta name="robots" content="index, follow">
 
+  <!-- Open Graph -->
+  <meta property="og:title" content="FreeFiles.cc - Search and Download eBooks in PDF Format for Free" />
+  <meta property="og:description" content="Free eBooks in PDF format ready to download using FreeFiles.cc, Enjoy over 90+ million free ebooks without signup or subscription." />
+  <meta property="og:site_name" content="FreeFiles" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://freefiles.cc" />
+  <meta property="og:image" content="https://freefiles.cc{{url_for('static', filename='images/og.jpg')}}" />
+
+  <!-- Canonical start -->
+  <link rel="canonical" href="https://freefiles.cc">
+  <!-- Canonical end -->
+
+  <!-- Twitter card start-->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="FreeFiles.cc - Search and Download eBooks in PDF Format for Free">
+  <meta name="twitter:description" content="Free eBooks in PDF format ready to download using FreeFiles.cc, Enjoy over 90+ million free ebooks without signup or subscription.">
+  <meta name="twitter:image" content="https://freefiles.cc{{url_for('static', filename='images/og.jpg')}}">
+  <meta name="twitter:image:alt" content="FreeFiles.cc - Search and Download eBooks in PDF Format for Free">
+  <meta name="twitter:site" content="@freefilescc">
+  <meta name="twitter:url" content="https://freefiles.cc">
+  <!-- Twitter card end-->
+
+  <!-- Schema Markup Start -->    
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "FreeFiles.cc - Search and Download eBooks in PDF Format for Free",
+  "url": "https://freefiles.cc",
+  "logo": "https://freefiles.cc{{url_for('static', filename='images/og.jpg')}}"
+}
+</script>
+  <!-- Schema Markup End --> 
+  {%endblock meta%}
+
+{% block content %}
 
 <div class="col-md-8 books mt-5 mb-2">
     <div

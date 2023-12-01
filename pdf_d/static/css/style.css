@@ -461,7 +461,7 @@ footer ul li a:hover {
 }
 
 .suggest-book .card .card-body .card-title h3 a {
-    font-size: 13px;
+    font-size: 16px;
     color: var(--main-color);
     text-decoration: none;
     transition: all .3s ease-in-out;

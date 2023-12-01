@@ -1,5 +1,5 @@
 from pdf_d.models import Category, Book
-from flask import render_template, url_for, redirect, request, Response, jsonify
+from flask import render_template, url_for, redirect, request, Response, jsonify, send_from_directory
 from pdf_d import app
 from pdf_d.forms import Filters
 from pdf_d.helpers import split_string, remove_duplicates, random_books, make_json
@@ -7,7 +7,7 @@ from pdf_d.get_data import vip_search
 from sqlalchemy import or_, func
 import time
 import random
-
+from flask_caching import Cache
 
 
 @app.errorhandler(Exception)
@@ -215,28 +215,28 @@ def about():
     title = "About"
     return render_template("about.html", title=title, categories=categories, sug_books=sug_books)
 
+cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
-@app.route("/sitemap.xml", methods=['GET'])
+@app.route('/sitemap.xml')
+@cache.cached(timeout=3600)
 def sitemap():
-    category_links = []
-    book_links = []
-    categories = Category.query.all()
-    books = Book.query.all()
+    category_links = [url_for('category', category_id=category.category_id,
+                              _external=True) for category in Category.query.all()]
+    book_links = [url_for('book', book=book.book_title.replace(
+        " ", "-") + "-" + book.book_id, _external=True) for book in Book.query.all()]
 
-    for category in categories:
-        category_links.append(
-            url_for('category', category_id=category.category_id, _external=True))
-
-    for book in books:
-        book_links.append(url_for('book', book=book.book_title.replace(
-            " ", "-") + "-" + book.book_id, _external=True))
-
-    sitemap_content = render_template(
-        "sitemap.xml", category_links=category_links, book_links=book_links)
-
-    response = Response(sitemap_content, content_type="application/xml")
-    response.headers['X-Robots-Tag'] = 'noindex, noodp, noarchive'
+    sitemap_xml = render_template(
+        'sitemap.xml', category_links=category_links, book_links=book_links)
+    response = Response(sitemap_xml, mimetype='text/xml')
     return response
+
+
+@app.route('/robots.txt')
+def robots():
+    print(app.static_folder)
+    return send_from_directory(app.static_folder, 'robots.txt')
+
+
 
 
 @app.route("/mobile-app")
@@ -277,4 +277,64 @@ def feedback():
     categories = Category.query.filter_by(category_type="parent").all()
     title = "Feedback"
     return render_template("feedback.html", title=title, categories=categories, sug_books=sug_books)
+
+@app.route("/sitemap1.xml")
+def sitemap1():
+    sitemap1_xml = render_template('sitemap1.xml')
+    response = Response(sitemap1_xml, mimetype="text/xml")
+    return response
+
+@app.route("/sitemap2.xml")
+def sitemap2():
+    sitemap2_xml = render_template('sitemap2.xml')
+    response = Response(sitemap2_xml, mimetype="text/xml")
+    return response
+
+@app.route("/sitemap3.xml")
+def sitemap3():
+    sitemap3_xml = render_template('sitemap3.xml')
+    response = Response(sitemap3_xml, mimetype="text/xml")
+    return response
+
+@app.route("/sitemap4.xml")
+def sitemap4():
+    sitemap4_xml = render_template('sitemap4.xml')
+    response = Response(sitemap4_xml, mimetype="text/xml")
+    return response
+
+@app.route("/sitemap5.xml")
+def sitemap5():
+    sitemap5_xml = render_template('sitemap5.xml')
+    response = Response(sitemap5_xml, mimetype="text/xml")
+    return response
+
+@app.route("/sitemap6.xml")
+def sitemap6():
+    sitemap6_xml = render_template('sitemap6.xml')
+    response = Response(sitemap6_xml, mimetype="text/xml")
+    return response
+
+@app.route("/sitemap7.xml")
+def sitemap7():
+    sitemap7_xml = render_template('sitemap7.xml')
+    response = Response(sitemap7_xml, mimetype="text/xml")
+    return response
+
+@app.route("/sitemap8.xml")
+def sitemap8():
+    sitemap8_xml = render_template('sitemap8.xml')
+    response = Response(sitemap8_xml, mimetype="text/xml")
+    return response
+
+@app.route("/sitemap9.xml")
+def sitemap9():
+    sitemap9_xml = render_template('sitemap9.xml')
+    response = Response(sitemap9_xml, mimetype="text/xml")
+    return response
+
+@app.route("/sitemap10.xml")
+def sitemap10():
+    sitemap10_xml = render_template('sitemap10.xml')
+    response = Response(sitemap10_xml, mimetype="text/xml")
+    return response
 

@@ -1,55 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    <url>
-        <loc>{{ url_for('home', _external=True) }}</loc>
-        <changefreq>Weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-
-    <url>
-        <loc>{{ url_for('about', _external=True) }}</loc>
-        <changefreq>Weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-
-    <url>
-        <loc>{{ url_for('contact', _external=True) }}</loc>
-        <changefreq>Weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-
-    <url>
-        <loc>{{ url_for('privacy', _external=True) }}</loc>
-        <changefreq>Weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-
-    <url>
-        <loc>{{url_for('feedback', _external=True) }}</loc>
-        <changefreq>Weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>{{url_for('dmca', _external=True) }}</loc>
-        <changefreq>Weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>{{url_for('mobile_app', _external=True) }}</loc>
-        <changefreq>Weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    {% for cat in category_links %}
-    <url>
-        <loc>{{ cat }}</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    {% endfor %}
-    {% for book in book_links %}
+     {% for book in book_links %}
     <url>
         <loc>{{ book }}</loc>
         <changefreq>weekly</changefreq>
@@ -57,4 +8,3 @@
     </url>
     {% endfor %}
 </urlset>
-

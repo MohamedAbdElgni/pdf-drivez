@@ -1,4 +1,54 @@
 {% extends 'layout.html' %}
+{%block meta%}
+
+   <meta charset="utf-8" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+  <title>About us - FreeFiles.cc</title>
+
+  <meta property="site_name" content="FreeFiles">
+  <meta name="description" content="Free Files is a complimentary search engine that enables you to discover, preview, and download millions of PDF files to your devices." />
+  <meta name="keywords" content="about freefiles, free pdf, download pdf, download ebook, free ebook pdf,freefiles pdf, freefiles, freefiles ebook, ebook summary, ebook free pdf, ebook download," />
+  <meta name="author" content="Freefiles" />
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="About us - FreeFiles.cc" />
+  <meta property="og:description" content="Free Files is a complimentary search engine that enables you to discover, preview, and download millions of PDF files to your devices." />
+  <meta property="og:site_name" content="FreeFiles" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://freefiles.cc/about" />
+  <meta property="og:image" content="https://freefiles.cc{{url_for('static', filename='images/og.jpg')}}" />
+
+  <!-- Canonical start -->
+  <link rel="canonical" href="https://freefiles.cc/about">
+  <!-- Canonical end -->
+
+  <!-- Twitter card start-->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="About us - FreeFiles.cc">
+  <meta name="twitter:description" content="Free Files is a complimentary search engine that enables you to discover, preview, and download millions of PDF files to your devices.">
+  <meta name="twitter:image" content="https://freefiles.cc{{url_for('static', filename='images/og.jpg')}}">
+  <meta name="twitter:image:alt" content="About FreeFiles.cc">
+  <meta name="twitter:site" content="@freefilescc">
+  <meta name="twitter:url" content="https://freefiles.cc/about">
+  <!-- Twitter card end-->
+
+  <!-- Schema Markup Start -->    
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "About us - FreeFiles.cc",
+  "url": "https://freefiles.cc/about",
+  "logo": "https://freefiles.cc{{url_for('static', filename='images/og.jpg')}}"
+}
+</script>
+  <!-- Schema Markup End --> 
+
+{%endblock meta%}
+
 {% block content %}
 
 <div class="col-md-8 terms mt-5 mb-2">

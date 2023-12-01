@@ -1,0 +1,13 @@
+User-agent: *
+Disallow: 
+Sitemap: https://freefiles.cc/sitemap.xml
+Sitemap: https://freefiles.cc/sitemap1.xml
+Sitemap: https://freefiles.cc/sitemap2.xml
+Sitemap: https://freefiles.cc/sitemap3.xml
+Sitemap: https://freefiles.cc/sitemap4.xml
+Sitemap: https://freefiles.cc/sitemap5.xml
+Sitemap: https://freefiles.cc/sitemap6.xml
+Sitemap: https://freefiles.cc/sitemap7.xml
+Sitemap: https://freefiles.cc/sitemap8.xml
+Sitemap: https://freefiles.cc/sitemap9.xml
+Sitemap: https://freefiles.cc/sitemap10.xml
