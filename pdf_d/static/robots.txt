@@ -44,3 +44,4 @@ Sitemap: https://freefiles.cc/sitemap/4/1
 Sitemap: https://freefiles.cc/sitemap/14/1
 Sitemap: https://freefiles.cc/sitemap/10/1
 Sitemap: https://freefiles.cc/sitemap/5/1
+Sitemap: https://freefiles.cc/sitemap.xml
