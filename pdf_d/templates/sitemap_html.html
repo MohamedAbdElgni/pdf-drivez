@@ -8,6 +8,7 @@
 <body>
     <h1>sitemaps</h1>
     <hr>
+    <a href="{{url_for('sitemap_index')}}"><h1>Sitemap_index</h1></a>
     <h2>Categories</h2>
     {% for category in categories %}
         {% if category.category_id == 999 %}

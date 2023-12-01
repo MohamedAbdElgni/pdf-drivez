@@ -298,6 +298,10 @@ def sitemap(category_id, part):
 
     return Response(sitemap_content, content_type='text/xml')
 
+@app.route("/sitemap.xml")
+def sitemap_index():
+    sitemap_content = render_template("sitemap_index.xml")
+    return Response(sitemap_content, content_type='text/xml')
 
 @app.route("/robots.txt")
 def robots_txt():
