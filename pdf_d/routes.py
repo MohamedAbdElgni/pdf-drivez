@@ -12,6 +12,7 @@ from flask_caching import Cache
 
 # Error handler for 404 Not Found
 # Error handler for 404 Not Found
+
 @app.errorhandler(404)
 def page_not_found(error):
     sug_books = random_books(Book, 4)
@@ -184,7 +185,7 @@ def search():
                 Book.book_pages <= form.pages_select.data)
             books = books.all()
     # Execute the query and get the filtered books
-    books = books.all()
+    books = books
     end_time_in_s = time.time()
     total_time = round(end_time_in_s - start_time_in_s, 4)
 
